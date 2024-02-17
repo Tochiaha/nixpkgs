@@ -1,6 +1,7 @@
 { lib
 , stdenvNoCC
 , fetchFromGitLab
+, alglib
 }:
 
 stdenvNoCC.mkDerivation rec {
@@ -15,10 +16,14 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-y6jdFVQSO80YLLOitPAY8TVMUsi58B6+3bFoncwr+Qo=";
   };
 
+  buildInputs = [ alglib ];
+
   installPhase = ''
     runHook preinstall
-    mkdir -p $out/bin
-    cp -r * $out/bin
+    mkdir -p $out/{bin,usr/share/rainbowcrack}
+    cp -R *.txt rt* rcrack $out/usr/share/rainbowcrack
+    cp -R rt* rcrack $out/bin
+    chmod +x $out/bin/r*
     runHook postinstall
   '';
 
@@ -26,7 +31,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Rainbow table generator to be used for cracking password";
     homepage = "https://gitlab.com/kalilinux/packages/rainbowcrack";
     maintainers = with maintainers; [ tochiaha ];
-    mainProgram = "rainbowcrack";
+    mainProgram = "rcrack";
     platforms = platforms.all;
   };
 }
