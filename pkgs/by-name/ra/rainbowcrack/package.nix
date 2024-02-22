@@ -20,10 +20,10 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     runHook preinstall
-    mkdir -p $out/{bin,usr/share/rainbowcrack}
-    cp -R *.txt rt* rcrack $out/usr/share/rainbowcrack
+    mkdir -p $out/{bin,share/rainbowcrack}
+    cp -R *.txt $out/share/rainbowcrack
     cp -R rt* rcrack $out/bin
-    chmod +x $out/bin/r*
+    chmod +x $out/bin/*
     runHook postinstall
   '';
 
